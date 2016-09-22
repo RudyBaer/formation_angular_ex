@@ -45,6 +45,13 @@ app.controller("main", ['$scope', '$http', function ($scope, $http) {
                 });
         };
 
+        $scope.predicate = '';
+        $scope.reverse = false;
+        $scope.order = function (order) {
+            $scope.predicate = order;
+            $scope.reverse = !$scope.reverse;
+        }
+
     }]
 );
 
