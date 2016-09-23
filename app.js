@@ -3,9 +3,9 @@ var bodyParser = require("body-parser");
 var app = express();
 
 
-var mongo = require('mongodb');
-var monk = require('monk');
-var db = monk('localhost:27017/projetk');
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/test');
+var db = mongoose.connection;
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({extended: true})); // support encoded bodies
