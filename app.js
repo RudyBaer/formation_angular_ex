@@ -33,20 +33,17 @@ app.post('/api/joke', function (req, res) {
     var joke = new Joke(req.body);
     joke.save(function (err, joke) {
         if (err) return console.error(err);
+        res.json(joke);
     });
 });
 
 
 app.put('/api/joke', function (req, res) {
-
-    console.log( req.body );
     var idJoke = req.body._id;
-    console.log(idJoke);
 
     Joke.findById(idJoke, function (err, joke) {
         if (err) return handleError(err);
 
-        joke.size = 'large';
         joke.save(function (err, updatedJoke) {
             if (err) return handleError(err);
             res.send(updatedJoke);
