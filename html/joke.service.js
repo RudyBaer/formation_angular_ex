@@ -13,9 +13,8 @@
         jokeService.getJokes = function () {
             var defer = $q.defer();
             $http.get('api/joke')
-                .then(function (data) {
-
-                    defer.resolve(data);
+                .then(function (response) {
+                    defer.resolve(response.data);
                 })
                 .catch(function (data, status, headers, config) {
                 console.log(data);
