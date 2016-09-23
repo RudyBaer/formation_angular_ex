@@ -17,21 +17,26 @@ app.controller("main", ['$scope',  'jokeService', function ($scope, jokeService)
         $scope.jokes = [];
 
 
-        jokeService.getJokes().then(function (data) {
-            $scope.jokes = data;
-        });
+        jokeService.getJokes()
+            .then(function (data) {
+                $scope.jokes = data;
+            });
 
 
 
         $scope.addJoke = function (joke) {
 
-            jokeService.addJoke(joke).then(function () {
-                var j = {};
-                j.txt = joke;
-                j.date = new Date();
-                $scope.jokes.push(j);
-                $scope.joke = "";
-            })
+            jokeService.addJoke(joke)
+                .then(function () {
+                    var j = {};
+                    j.txt = joke;
+                    j.date = new Date();
+                    $scope.jokes.push(j);
+                    $scope.joke = "";
+                })
+                .catch(function (err) {
+                    console.log(err);
+                })
 
         };
 
@@ -96,14 +101,13 @@ app.factory("jokeService", ['$http', '$q', function ($http, $q) {
 
     jokeService.addJoke = function (joke) {
         var defer = $q.defer();
-        console.log(joke);
 
         var j = {};
         j.txt = joke;
         j.date = new Date();
         $http.post('api/joke', j)
             .then(function (data) {
-                defer.resolve();
+                defer.resolve(data);
             })
             .catch(function (data, status, headers, config) {
                 defer.reject();
