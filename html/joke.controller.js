@@ -5,45 +5,31 @@
         .module('monapp')
         .controller('JokeController', JokeController);
 
-    JokeController.$inject = [ '$http'];
-    function JokeController($http) {
+    JokeController.$inject = ['jokeService'];
+    function JokeController(jokeService) {
         var vm = this;
-        vm.addFavorite = addFavorite;
-        vm.removeFavorite = removeFavorite;
-        vm.plusOne = plusOne;
+        vm.name = "Kevin";
+        vm.jokes= [];
+        vm.addJoke = addJoke;
 
+        activate();
 
-        function plusOne(joke) {
-
-            if (joke.score == undefined) {
-                joke.score = 0;
-
-            }
-            joke.score += 1;
-            updateJoke(joke);
-        }
-
-
-        function removeFavorite(joke) {
-            joke.favorite = false;
-            updateJoke(joke);
-        }
-
-
-        function addFavorite(joke) {
-            joke.favorite = true;
-            updateJoke(joke);
-        }
-
-        function updateJoke(joke) {
-            $http.put('api/joke', joke)
-                .then(function (data) {
-
-                })
-                .catch(function (data, status, headers, config) {
-                console.log(data);
+        function activate() {
+            jokeService.getJokes().then(function (data) {
+                vm.jokes = data;
             });
         }
 
+        function addJoke(joke) {
+            jokeService.addJoke(joke).then(function () {
+                var j = {};
+                j.txt = joke;
+                j.date = new Date();
+                vm.jokes.push(j);
+                vm.joke = "";
+            })
+        }
+
     }
+
 })();
