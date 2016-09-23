@@ -13,7 +13,8 @@ app.use(bodyParser.urlencoded({extended: true})); // support encoded bodies
 
 var jokeSchema = mongoose.Schema({
     txt: String,
-    date: Date
+    date: Date,
+    score: Number
 });
 
 var Joke = mongoose.model('Joke', jokeSchema);
@@ -32,13 +33,22 @@ app.post('/api/joke', function (req, res) {
     var joke = new Joke(req.body);
     joke.save(function (err, joke) {
         if (err) return console.error(err);
+        res.json(joke);
     });
 });
 
 
 app.put('/api/joke', function (req, res) {
+    var idJoke = req.body._id;
 
+    Joke.findById(idJoke, function (err, joke) {
+        if (err) return handleError(err);
 
+        joke.save(function (err, updatedJoke) {
+            if (err) return handleError(err);
+            res.send(updatedJoke);
+        });
+    });
 });
 
 
