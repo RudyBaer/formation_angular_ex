@@ -19,7 +19,8 @@ app.controller("main", ['$scope', '$http', function ($scope, $http) {
         //
         $http.get('api/joke')
             .then(function (data) {
-                $scope.jokes = data;
+                console.log(data.data);
+                $scope.jokes = data.data;
             })
             .catch(function (data, status, headers, config) {
                 console.log(data);
@@ -28,8 +29,8 @@ app.controller("main", ['$scope', '$http', function ($scope, $http) {
 
 
         $scope.addJoke = function (joke) {
-            console.log(joke);
             $scope.joke = "";
+            console.log("joke");
 
             var j = {};
             j.txt = joke;
@@ -44,13 +45,6 @@ app.controller("main", ['$scope', '$http', function ($scope, $http) {
                     console.log(data);
                 });
         };
-
-        $scope.predicate = '';
-        $scope.reverse = false;
-        $scope.order = function (order) {
-            $scope.predicate = order;
-            $scope.reverse = !$scope.reverse;
-        }
 
     }]
 );
@@ -70,7 +64,6 @@ app.controller("jokeController", ['$scope', '$http', function ($scope, $http) {
 
             if (joke.score == undefined) {
                 joke.score = 0;
-
             }
             joke.score = 1;
             updateJoke(joke);
@@ -80,7 +73,7 @@ app.controller("jokeController", ['$scope', '$http', function ($scope, $http) {
         var updateJoke = function (joke) {
             $http.put('api/joke', joke)
                 .then(function (data) {
-
+                    console.log( data );
                 })
                 .catch(function (data, status, headers, config) {
                     console.log(data);
