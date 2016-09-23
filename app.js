@@ -44,7 +44,6 @@ app.put('/api/joke', function (req, res) {
     Joke.findById(idJoke, function (err, joke) {
         if (err) return handleError(err);
 
-        joke.size = 'large';
         joke.save(function (err, updatedJoke) {
             if (err) return handleError(err);
             res.send(updatedJoke);
