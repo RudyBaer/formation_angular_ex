@@ -16,10 +16,16 @@ app.controller("main", ['$scope', '$http', function ($scope, $http) {
         $scope.name = "Kevin";
         $scope.jokes = [];
 
+        $scope.predicate = '';
+        $scope.reverse = false;
+        $scope.order = function (order) {
+            $scope.predicate = order;
+            $scope.reverse = !$scope.reverse;
+        };
+
         //
         $http.get('api/joke')
             .then(function (data) {
-                console.log(data.data);
                 $scope.jokes = data.data;
             })
             .catch(function (data, status, headers, config) {
@@ -30,7 +36,6 @@ app.controller("main", ['$scope', '$http', function ($scope, $http) {
 
         $scope.addJoke = function (joke) {
             $scope.joke = "";
-            console.log("joke");
 
             var j = {};
             j.txt = joke;
