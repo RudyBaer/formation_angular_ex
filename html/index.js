@@ -1,10 +1,10 @@
 var app = angular.module("monapp", []);
 
-app.config(function (localStorageServiceProvider) {
+app.config(function () {
 
 });
 
-app.run(function(localStorageService){
+app.run(function(){
 
 });
 
@@ -84,7 +84,7 @@ app.factory("jokeService", ['$http', '$q', function ($http, $q) {
         $http.get('api/joke')
             .then(function (data) {
 
-                defer.resolve(data);
+                defer.resolve(data.data);
             })
             .catch(function (data, status, headers, config) {
                 console.log(data);
